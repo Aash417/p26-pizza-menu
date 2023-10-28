@@ -68,27 +68,31 @@ function Menu() {
 	// const pizzas = [];
 	return (
 		<main className="menu">
-			<h2>Pizza</h2>
+			<h2>Our menu</h2>
+
 			{pizzas.length > 0 && (
-				<ul className="pizzas">
-					{pizzas.map((pizza) => (
-						<Pizza pizzaObj={pizza} key={pizza.name} />
-					))}
-				</ul>
+				<>
+					<p>Authentic italian cuisine.</p>
+					<ul className="pizzas">
+						{pizzas.map((pizza) => (
+							<Pizza pizzaObj={pizza} key={pizza.name} />
+						))}
+					</ul>
+				</>
 			)}
 		</main>
 	);
 }
-function Pizza(props) {
-	// console.log(props);r
+function Pizza({ pizzaObj }) {
+	// console.log(props);
 	return (
-		<li className="pizza">
-			<img src={props.pizzaObj.photoName} alt={props.pizzaObj.name}></img>
+		<li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+			<img src={pizzaObj.photoName} alt={pizzaObj.name}></img>
 
 			<div>
-				<h3>{props.pizzaObj.name}</h3>
-				<p>{props.pizzaObj.ingredients}</p>
-				<span>{props.pizzaObj.price}</span>
+				<h3>{pizzaObj.name}</h3>
+				<p>{pizzaObj.ingredients}</p>
+				<span>{pizzaObj.soldOut ? "sold out" : pizzaObj.price}</span>
 			</div>
 		</li>
 	);
@@ -101,14 +105,16 @@ function Footer() {
 
 	return (
 		<footer className="footer">
-			{isOpen && <Order closeHour={closeHour} />}
+			{isOpen && <Order closeHour={closeHour} openHour={openHour} />}
 		</footer>
 	);
 }
-function Order(props) {
+function Order({ openHour, closeHour }) {
 	return (
 		<div className="order">
-			<p>We are open until {props.closeHour}</p>
+			<p>
+				We are open from {openHour}:00 am to {closeHour}:00 pm
+			</p>
 			<button className="btn">Order</button>
 		</div>
 	);
